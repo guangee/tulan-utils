@@ -43,7 +43,9 @@ jobs:
 
       - name: Get version from package.json
         id: package-version
-        run: echo "version=$(grep -o '"version": "[^"]*"' package.json | cut -d'"' -f4)" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=$(grep -o '"version": "[^"]*"' package.json | cut -d'"' -f4)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Publish to GitHub Packages
         if: github.ref == 'refs/heads/release' || github.event_name == 'release' || github.event_name == 'workflow_dispatch'
