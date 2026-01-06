@@ -1,5 +1,5 @@
 {
-  "name": "@yourusername/tulan-utils",
+  "name": "@guangee/tulan-utils",
   "version": "0.1.0",
   "description": "一个实用的 JavaScript 工具类库",
   "main": "dist/index.js",
