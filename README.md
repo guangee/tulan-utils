@@ -250,19 +250,50 @@ npm install @guangee/tulan-utils@0.2.0
 
 ## 发布
 
-项目使用 GitHub Actions 自动发布到 GitHub Packages。当创建新的 Release 时，会自动触发构建和发布流程。
+项目使用 GitHub Actions 自动发布到 GitHub Packages。支持多种触发方式：
 
-**注意**：在首次使用前，请确保：
-1. 将 `package.json` 中的 `@yourusername` 替换为你的 GitHub 用户名
-2. 将 `.github/workflows/publish.yml` 中的 `scope: '@yourusername'` 替换为你的 GitHub 用户名
-3. GitHub Actions 会自动使用 `GITHUB_TOKEN`，无需额外配置
+### 自动发布触发方式
 
-### 发布新版本流程
+1. **release 分支提交**（推荐）：当代码推送到 `release` 分支时，自动构建并发布
+2. **创建 GitHub Release**：在 GitHub 上创建 Release 时触发
+3. **手动触发**：通过 GitHub Actions 页面手动触发
+
+### 发布新版本流程（推荐方式）
 
 1. 更新 `package.json` 中的版本号（遵循语义化版本）
+2. 提交代码并推送到 `release` 分支：
+   ```bash
+   git checkout release  # 或创建 release 分支
+   git add package.json
+   git commit -m "chore: bump version to 0.1.0"
+   git push origin release
+   ```
+3. GitHub Actions 会自动：
+   - 构建项目
+   - 发布到 GitHub Packages
+   - 创建 Git 标签（格式：`v0.1.0`）
+
+### 其他发布方式
+
+#### 方式一：通过 GitHub Release
+
+1. 更新 `package.json` 中的版本号
 2. 提交代码并推送到仓库
 3. 在 GitHub 上创建新的 Release，标签格式为 `v0.1.0`（与 package.json 中的版本号对应）
-4. GitHub Actions 会自动构建并发布到 GitHub Packages
+4. GitHub Actions 会自动构建并发布
+
+#### 方式二：手动触发
+
+1. 在 GitHub 仓库的 Actions 页面
+2. 选择 "Publish to GitHub Packages" 工作流
+3. 点击 "Run workflow"
+4. 输入版本号并运行
+
+### 注意事项
+
+- GitHub Actions 会自动使用 `GITHUB_TOKEN`，无需额外配置
+- 确保 `package.json` 中的版本号已更新
+- 发布到 `release` 分支会自动创建 Git 标签
 
 ## License
 
