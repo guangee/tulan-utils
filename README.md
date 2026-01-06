@@ -4,15 +4,49 @@
 
 ## 安装
 
-### 配置 npm 以使用 GitHub Packages
+### 步骤 1：配置 npm 以使用 GitHub Packages
 
-首先，在你的项目中创建或编辑 `.npmrc` 文件，添加以下内容：
+在你的项目根目录创建或编辑 `.npmrc` 文件，添加以下内容：
 
 ```
 @guangee:registry=https://npm.pkg.github.com
 ```
 
-### 安装包
+### 步骤 2：身份验证（必需）
+
+**重要**：GitHub Packages 即使是公开包，也需要身份验证才能下载。
+
+#### 方法一：使用 npm login（推荐）
+
+```bash
+npm login --scope=@guangee --registry=https://npm.pkg.github.com
+```
+
+然后输入：
+- **Username**: 你的 GitHub 用户名（例如：guangee）
+- **Password**: 你的 GitHub Personal Access Token（不是密码！）
+- **Email**: 你的 GitHub 邮箱
+
+#### 方法二：在 .npmrc 中直接配置 token
+
+在 `.npmrc` 文件中添加：
+
+```
+@guangee:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
+
+将 `YOUR_GITHUB_TOKEN` 替换为你的 GitHub Personal Access Token。
+
+#### 如何创建 GitHub Personal Access Token
+
+1. 访问 GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. 点击 "Generate new token (classic)"
+3. 设置名称和过期时间
+4. 勾选 `read:packages` 权限（如果包是私有的，还需要 `repo` 权限）
+5. 点击 "Generate token" 并复制 token（只显示一次，请妥善保存）
+
+### 步骤 3：安装包
 
 ```bash
 npm install @guangee/tulan-utils
@@ -27,13 +61,44 @@ npm install @guangee/tulan-utils
 }
 ```
 
-**注意**：如果这是私有包，你需要先进行身份验证：
+### 故障排除
 
-```bash
-npm login --scope=@guangee --registry=https://npm.pkg.github.com
-```
+#### 问题 1：404 Not Found
 
-然后输入你的 GitHub 用户名和 Personal Access Token（需要 `read:packages` 权限）。
+**错误信息**：`npm ERR! 404 '@guangee/tulan-utils@0.1.0' is not in this registry`
+
+**解决方案**：
+1. 确认包已经发布到 GitHub Packages（检查仓库的 Packages 页面）
+2. 确认 `.npmrc` 文件配置正确
+3. 确认已进行身份验证
+
+#### 问题 2：401 Unauthorized
+
+**错误信息**：`npm ERR! 401 Unauthorized`
+
+**解决方案**：
+1. 确认已运行 `npm login` 或配置了 token
+2. 确认 token 有 `read:packages` 权限
+3. 确认 token 未过期
+4. 如果使用 `.npmrc` 配置 token，确认格式正确
+
+#### 问题 3：403 Forbidden
+
+**错误信息**：`npm ERR! 403 Forbidden`
+
+**解决方案**：
+1. 确认 token 有正确的权限
+2. 如果是私有包，确认 token 有 `repo` 权限
+3. 确认你的 GitHub 账号有访问该包的权限
+
+#### 问题 4：包找不到
+
+**检查清单**：
+- [ ] 包已经发布（创建了 Release 或手动触发发布）
+- [ ] `.npmrc` 文件存在且配置正确
+- [ ] 已进行身份验证
+- [ ] 包名和版本号正确（`@guangee/tulan-utils@0.1.0`）
+- [ ] 网络连接正常
 
 ## 使用方法
 

@@ -1,3 +1,8 @@
-# 将此文件复制为 .npmrc 并替换 yourusername 为你的 GitHub 用户名
-@yourusername:registry=https://npm.pkg.github.com
+# 将此文件复制为 .npmrc 并替换 guangee 为你的 GitHub 用户名
+# 方式一：只配置 registry（需要运行 npm login）
+@guangee:registry=https://npm.pkg.github.com
+
+# 方式二：直接配置 token（推荐，无需每次登录）
+# @guangee:registry=https://npm.pkg.github.com
+# //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
 
