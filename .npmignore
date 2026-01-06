@@ -1,0 +1,17 @@
+src/
+node_modules/
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+coverage/
+.env
+.env.local
+tsconfig.json
+rollup.config.js
+.github/
+*.test.ts
+*.test.js
+
